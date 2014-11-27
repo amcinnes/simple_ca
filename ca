@@ -1,0 +1,24 @@
+#!/bin/sh
+set -e
+
+function usage {
+    echo "Usage: $0 { init CA_DESCRIPTION | cert DOMAIN }"
+    exit 1
+}
+
+if [ $# != 2 ]; then
+    usage
+fi
+
+case "$1" in
+    init)
+        openssl req -config openssl.cnf -new -x509 -days 365 -keyout ca.key.pem -out ca.cert.pem -subj "/CN=$2"
+        ;;
+    cert)
+        filename=`sed s/[*]/_/g <<<$2`
+        openssl req -config openssl.cnf -new -keyout $filename.key.pem -out $filename.csr.pem -subj "/CN=$2"
+        openssl x509 -extfile openssl.cnf -req -days 365 -in $filename.csr.pem -CA ca.cert.pem -CAkey ca.key.pem -CAcreateserial -out $filename.cert.pem -extensions usr_cert
+        ;;
+    *)
+        usage
+esac
