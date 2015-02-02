@@ -19,6 +19,11 @@ case "$1" in
         openssl req -config openssl.cnf -new -keyout $filename.key.pem -out $filename.csr.pem -subj "/CN=$2"
         openssl x509 -extfile openssl.cnf -req -days 365 -in $filename.csr.pem -CA ca.cert.pem -CAkey ca.key.pem -CAcreateserial -out $filename.cert.pem -extensions usr_cert
         ;;
+    selfsigned)
+        filename=`sed s/[*]/_/g <<<$2`
+        openssl req -config openssl.cnf -new -keyout $filename.key.pem -out $filename.csr.pem -subj "/CN=$2"
+        openssl x509 -extfile openssl.cnf -req -days 365 -in $filename.csr.pem -signkey $filename.key.pem -out $filename.cert.pem -extensions usr_cert
+        ;;
     *)
         usage
 esac

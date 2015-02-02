@@ -13,6 +13,13 @@ Creates a certificate authority. The private key is stored **unencrypted** in
 
 ### `./ca cert '*.example.com'`
 
-Creates and signs a certificate for `*.example.com`. The certificate and private
-key, which you need to give to your web server, are stored in
-`_.example.com.cert.pem` and `_.example.com.key.pem` respectively.
+Creates and signs a certificate for `*.example.com` using the CA created
+previously. The certificate and private key, which you need to give to your web
+server, are stored in `_.example.com.cert.pem` and `_.example.com.key.pem`
+respectively.
+
+### `./ca selfsigned '*.example.com'`
+
+Creates a self-signed certificate for `*.example.com`, independent of any CA.
+The certificate and private key, which you need to give to your web server, are
+stored in `_.example.com.cert.pem` and `_.example.com.key.pem` respectively.
