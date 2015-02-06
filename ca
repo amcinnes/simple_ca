@@ -2,7 +2,7 @@
 set -e
 
 function usage {
-    echo "Usage: $0 { init CA_DESCRIPTION | cert DOMAIN }"
+    echo "Usage: $0 { init CA_DESCRIPTION | cert DOMAIN | selfsigned DOMAIN }"
     exit 1
 }
 
